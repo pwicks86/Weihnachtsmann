@@ -68,22 +68,27 @@ class RandomJunk():
 class Falling():
     def __init__(self):
         clear()
-        self.num_leds = 0
         self.led_pos = 0
-        self.end = 60
+        self.end = numpix
+        self.color = rand_color()
 
     def run(self):
         # TODO: this needs to be optimized
-        clear()
-        for i in range(self.end, numpix):
-            strip[i] = (255, 255, 255)
-        strip[self.led_pos] = (255,255,255)
-        self.led_pos += 2
+        # for i in range(self.end, numpix):
+            # strip[i] = (255, 255, 255)
+
         if (self.led_pos >= self.end):
             self.led_pos = 0
             self.end -= 1
-
+        strip[self.led_pos] = self.color
         strip.write()
+        if self.led_pos < self.end - 1:
+            strip[self.led_pos] = (0,0,0)
+        self.led_pos += 1
+        if self.end == 0:
+            self.led_pos = 0
+            self.end = numpix
+            self.color = rand_color()
 
 # similar to Falling
 class FunFill():
@@ -103,7 +108,7 @@ class FunFill():
 
 modes = [FunFill, Falling, RandomJunk, ColorFlash, ]
 num_modes = len(modes)
-mode_index = 0
+mode_index = 1
 active_mode = modes[mode_index]()
 
 last_button = button.value
