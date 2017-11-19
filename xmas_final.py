@@ -73,10 +73,6 @@ class Falling():
         self.color = rand_color()
 
     def run(self):
-        # TODO: this needs to be optimized
-        # for i in range(self.end, numpix):
-            # strip[i] = (255, 255, 255)
-
         if (self.led_pos >= self.end):
             self.led_pos = 0
             self.end -= 1
