@@ -148,8 +148,7 @@ class RWMarch():
             strip[(i + self.offset) % numpix] = red if i % 4 <=1 else white
         strip.write()
 
-
-modes = [RWMarch, RWTwinkle, BWFade, Sparkle, FunFill, Falling, RandomJunk, ColorFlash, ]
+modes = [RWMarch, RWTwinkle, BWFade, Sparkle, FunFill, Falling, RandomJunk, ColorFlash]
 num_modes = len(modes)
 mode_index = 0
 active_mode = modes[mode_index]()
