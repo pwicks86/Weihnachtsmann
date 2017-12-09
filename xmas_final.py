@@ -105,9 +105,23 @@ class FunFill():
 
         strip.write()
 
-modes = [FunFill, Falling, RandomJunk, ColorFlash, ]
+class Sparkle():
+    def __init__(self):
+        clear()
+        self.clear_list = []
+    def run(self):
+        for i in self.clear_list:
+            strip[i] = (0,0,0)
+        self.clear_list.clear()
+        for i in range(numpix/3):
+            idx = random.randrange(0,numpix - 1)
+            strip[idx] = (255,255,255)
+            self.clear_list.append(idx)
+        strip.write()
+
+modes = [Sparkle, FunFill, Falling, RandomJunk, ColorFlash, ]
 num_modes = len(modes)
-mode_index = 1
+mode_index = 0
 active_mode = modes[mode_index]()
 
 last_button = button.value
