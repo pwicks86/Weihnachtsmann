@@ -16,6 +16,8 @@ numpix = 60
 strip = neopixel.NeoPixel(board.D1, numpix, brightness=1, auto_write=False)
 
 blue = (0,0,255)
+green = (0,255,0)
+red = (255,0,0)
 white = (255,255,255)
 black = (0,0,0)
 
@@ -146,10 +148,30 @@ class BWFade():
         strip.write()
         self.fades = list(filter(lambda f: f[1][2] > 0, self.fades))
 
+class RWTwinkle():
+    def __init__(self):
+        clear()
+        self.offset = 0
+    def run(self):
+        self.offset += 1
+        for i in range(numpix):
+            strip[(i + self.offset) % numpix] = red if i % 2 == 0 else white
+        strip.write()
 
-modes = [BWFade ,Sparkle, FunFill, Falling, RandomJunk, ColorFlash, ]
+class RWMarch():
+    def __init__(self):
+        clear()
+        self.offset = 0
+    def run(self):
+        self.offset += 1
+        for i in range(numpix):
+            strip[(i + self.offset) % numpix] = red if i % 4 <=1 else white
+        strip.write()
+
+
+modes = [RWMarch, RWTwinkle, BWFade, Sparkle, FunFill, Falling, RandomJunk, ColorFlash, ]
 num_modes = len(modes)
-mode_index = 1
+mode_index = 0
 active_mode = modes[mode_index]()
 
 last_button = button.value
