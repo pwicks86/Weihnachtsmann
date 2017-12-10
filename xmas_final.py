@@ -6,11 +6,6 @@ from touchio import TouchIn
 from math import floor
 from digitalio import DigitalInOut, Direction, Pull
 
-button = DigitalInOut(board.D0)
-button.direction = Direction.INPUT
-button.pull = Pull.DOWN
-
-touch2 = TouchIn(board.A2)
 
 numpix = 60
 strip = neopixel.NeoPixel(board.D1, numpix, brightness=1, auto_write=False)
@@ -153,10 +148,14 @@ num_modes = len(modes)
 mode_index = 0
 active_mode = modes[mode_index]()
 
+button = DigitalInOut(board.D0)
+button.direction = Direction.INPUT
+button.pull = Pull.DOWN
 last_button = button.value
+
 while True:
-    # if (button.value != last_button):
-    if touch2.value:
+    if (button.value and button.value != last_button):
         mode_index = (mode_index + 1) % num_modes
         active_mode = modes[mode_index]()
+    last_button = button.value
     active_mode.run()
